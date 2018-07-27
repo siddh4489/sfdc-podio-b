@@ -7,12 +7,18 @@ package com.sfdc.podio.rest;
 
 import com.sfdc.podio.operation.SalesforcePodioOperation;
 import com.sfdc.podio.parser.SalesforcePodioDataParser;
+import com.sfdc.podio.quartz.QuartzJobScheduler;
 import com.sfdc.podio.util.SalesforcePodioConfiguration;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Properties;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import org.quartz.SchedulerException;
 
 /**
  * The SalesforcePodioRestApi class is the Starting point of Salesforce - Podio
@@ -59,5 +65,24 @@ public class SalesforcePodioRestApi {
         }
         return Response.status(201).entity(itemref.toString()).build();
     }
-   
+
+    @GET
+    @Path("/start")
+    @Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
+    public void getInvoke() throws IOException, URISyntaxException, SchedulerException {
+        System.out.println("Job Start Request");
+        //Qschedular.invokeAction();
+        QuartzJobScheduler quaObj = new QuartzJobScheduler();
+        quaObj.Start();
+    }
+
+    @GET
+    @Path("/stop")
+    @Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
+    public void getStop() throws IOException, URISyntaxException, SchedulerException {
+        System.out.println("Job Stop Request");
+        QuartzJobScheduler quaObj = new QuartzJobScheduler();
+        quaObj.stop();
+    }
+
 }
