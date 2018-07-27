@@ -69,20 +69,22 @@ public class SalesforcePodioRestApi {
     @GET
     @Path("/start")
     @Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-    public void getInvoke() throws IOException, URISyntaxException, SchedulerException {
+    public Response getInvoke() throws IOException, URISyntaxException, SchedulerException {
         System.out.println("Job Start Request");
         //Qschedular.invokeAction();
         QuartzJobScheduler quaObj = new QuartzJobScheduler();
         quaObj.Start();
+        return Response.status(201).entity("Status : Job Started").build();
     }
 
     @GET
     @Path("/stop")
     @Produces(javax.ws.rs.core.MediaType.TEXT_HTML)
-    public void getStop() throws IOException, URISyntaxException, SchedulerException {
+    public Response getStop() throws IOException, URISyntaxException, SchedulerException {
         System.out.println("Job Stop Request");
         QuartzJobScheduler quaObj = new QuartzJobScheduler();
         quaObj.stop();
+        return Response.status(201).entity("Status : Job Stoped").build();
     }
 
 }
